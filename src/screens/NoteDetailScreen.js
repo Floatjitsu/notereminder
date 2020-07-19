@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, Input, Button } from 'react-native-elements';
+import { Input, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { deletenote } from '../actions/noteActions';
 
