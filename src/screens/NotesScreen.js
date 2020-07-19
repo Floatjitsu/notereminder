@@ -14,6 +14,7 @@ const NotesScreen = ({ navigation }) => {
         id={item.id}
         title={item.title}
         notes={item.notes}
+        reminder={item.reminder}
       />
     );
   };

@@ -108,7 +108,11 @@ const CreateNoteScreen = ({ navigation }) => {
           addNote({
             id: generateId(),
             title: noteTitle,
-            notes
+            notes,
+            reminder: {
+              date: reminderDate,
+              time: reminderTime
+            }
           });
           navigation.goBack();
         }}
