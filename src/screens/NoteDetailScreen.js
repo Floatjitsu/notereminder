@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 const NoteDetailScreen = ({ navigation }) => {
-  const noteId = navigation.state.params.noteId;
+  const noteId = navigation.getParam('noteId');
 
   return (
     <View>
