@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const NoteDetailScreen = () => {
+const NoteDetailScreen = ({ navigation }) => {
+  const noteId = navigation.state.params.noteId;
+
   return (
     <View>
-      <Text>NoteDetailScreen</Text>
+      <Text>{noteId}</Text>
     </View>
   );
 };
