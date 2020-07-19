@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { View, StyleSheet, TextInput } from 'react-native';
 import { Text, Input, Button } from 'react-native-elements';
+import { addnote } from '../actions/noteActions';
 
 const CreateNoteScreen = ({ navigation }) => {
   const [noteTitle, setNoteTitle] = useState('');
   const [notes, setNotes] = useState('');
+
+  const dispatch = useDispatch();
+  const addNote = (note) => dispatch(addnote(note));
 
   const generateId = () => {
     return `_${Math.random().toString(36).substr(2, 9)}`;
@@ -27,7 +31,7 @@ const CreateNoteScreen = ({ navigation }) => {
         title="Save Note"
         type="outline"
         onPress={() => {
-          navigation.state.params.addNote({
+          addNote({
             id: generateId(),
             title: noteTitle,
             notes
