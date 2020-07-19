@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 
-const NotesItem = ({ title, notes, id }) => {
+const NotesItem = ({ navigation, title, notes, id }) => {
   const onItemPress = () => {
-    console.log(`Note item ${id} got pressed`);
+    navigation.navigate('NoteDetail');
   };
 
   return (
