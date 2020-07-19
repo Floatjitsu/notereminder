@@ -11,7 +11,7 @@ const NotesScreen = ({ navigation }) => {
   const addNote = (note) => dispatch(addnote(note));
 
   const renderItem = ({ item }) => {
-    return <NotesItem title={item.title} notes={item.notes} />;
+    return <NotesItem id={item.id} title={item.title} notes={item.notes} />;
   };
 
   const onButtonPress = () => {

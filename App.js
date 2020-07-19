@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './src/store';
 import NotesScreen from './src/screens/NotesScreen';
 import CreateNoteScreen from './src/screens/CreateNoteScreen';
+import NoteDetailScreen from './src/screens/NoteDetailScreen';
 
 const navigator = createStackNavigator(
   {
@@ -13,6 +14,12 @@ const navigator = createStackNavigator(
       screen: CreateNoteScreen,
       navigationOptions: () => ({
         title: 'Create New Note'
+      })
+    },
+    NoteDetail: {
+      screen: NoteDetailScreen,
+      navigationOptions: () => ({
+        title: 'Note Detail'
       })
     }
   },

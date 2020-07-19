@@ -1,12 +1,18 @@
 import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 
-const NotesItem = ({ title, notes }) => {
+const NotesItem = ({ title, notes, id }) => {
+  const onItemPress = () => {
+    console.log(`Note item ${id} got pressed`);
+  };
+
   return (
     <>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.notes}>{notes}</Text>
-      <View style={styles.seperator}></View>
+      <TouchableOpacity onPress={onItemPress}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.notes}>{notes}</Text>
+        <View style={styles.seperator}></View>
+      </TouchableOpacity>
     </>
   );
 };
