@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Input, Button } from 'react-native-elements';
+import { useDispatch } from 'react-redux';
+import { deletenote } from '../actions/noteActions';
 
 const NoteDetailScreen = ({ navigation }) => {
   const noteId = navigation.getParam('noteId');
 
   const [noteTitle, setNoteTitle] = useState(navigation.getParam('title'));
   const [notes, setNotes] = useState(navigation.getParam('notes'));
+
+  const dispatch = useDispatch();
+  const deleteNote = (id) => dispatch(deletenote(id));
 
   return (
     <View style={styles.container}>
@@ -22,7 +27,14 @@ const NoteDetailScreen = ({ navigation }) => {
       />
       <Button title="Save Note" />
       <View style={{ marginTop: 10 }} />
-      <Button title="Delete Note" buttonStyle={{ backgroundColor: 'red' }} />
+      <Button
+        title="Delete Note"
+        buttonStyle={{ backgroundColor: 'red' }}
+        onPress={() => {
+          deleteNote(noteId);
+          navigation.goBack();
+        }}
+      />
     </View>
   );
 };
