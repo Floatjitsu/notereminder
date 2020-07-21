@@ -5,6 +5,7 @@ import { Text, Input, Button } from 'react-native-elements';
 import moment from 'moment';
 import { addnote } from '../actions/noteActions';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import saveNoteToStorage from '../storage/saveNote';
 
 const CreateNoteScreen = ({ navigation }) => {
   const [noteTitle, setNoteTitle] = useState('');
@@ -42,6 +43,23 @@ const CreateNoteScreen = ({ navigation }) => {
         setReminderTime(moment(selectedDate).format('HH:mm'));
         break;
     }
+  };
+
+  const onSaveNote = async () => {
+    const note = {
+      id: generateId(),
+      title: noteTitle,
+      notes,
+      reminder: {
+        date: reminderDate,
+        time: reminderTime
+      }
+    };
+    try {
+      await saveNoteToStorage(note);
+      addNote(note);
+      navigation.goBack();
+    } catch (e) {}
   };
 
   return (
@@ -101,22 +119,7 @@ const CreateNoteScreen = ({ navigation }) => {
           onChange={onChange}
         />
       )}
-      <Button
-        title="Save Note"
-        type="outline"
-        onPress={() => {
-          addNote({
-            id: generateId(),
-            title: noteTitle,
-            notes,
-            reminder: {
-              date: reminderDate,
-              time: reminderTime
-            }
-          });
-          navigation.goBack();
-        }}
-      />
+      <Button title="Save Note" type="outline" onPress={onSaveNote} />
     </View>
   );
 };
