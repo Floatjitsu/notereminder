@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { deletenote } from '../actions/noteActions';
+import deleteNoteFromStorage from '../storage/deleteNote';
 
 const NoteDetailScreen = ({ navigation }) => {
   const noteId = navigation.getParam('noteId');
@@ -12,6 +13,12 @@ const NoteDetailScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const deleteNote = (id) => dispatch(deletenote(id));
+
+  const onDelete = async (id) => {
+    await deleteNoteFromStorage(id);
+    deleteNote(id);
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
@@ -30,10 +37,7 @@ const NoteDetailScreen = ({ navigation }) => {
       <Button
         title="Delete Note"
         buttonStyle={{ backgroundColor: 'red' }}
-        onPress={() => {
-          deleteNote(noteId);
-          navigation.goBack();
-        }}
+        onPress={() => onDelete(noteId)}
       />
     </View>
   );
