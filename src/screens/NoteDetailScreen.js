@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { deletenote } from '../actions/noteActions';
 import deleteNoteFromStorage from '../storage/deleteNote';
