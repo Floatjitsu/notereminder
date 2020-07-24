@@ -4,12 +4,12 @@ import { Input, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { deletenote } from '../actions/noteActions';
 import deleteNoteFromStorage from '../storage/deleteNote';
+import NoteDetailForm from '../components/NoteDetailForm';
 
 const NoteDetailScreen = ({ navigation }) => {
   const noteId = navigation.getParam('noteId');
-
-  const [noteTitle, setNoteTitle] = useState(navigation.getParam('title'));
-  const [notes, setNotes] = useState(navigation.getParam('notes'));
+  const title = navigation.getParam('title');
+  const notes = navigation.getParam('notes');
 
   const dispatch = useDispatch();
   const deleteNote = (id) => dispatch(deletenote(id));
@@ -21,36 +21,15 @@ const NoteDetailScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Input
-        inputStyle={styles.titleInput}
-        value={noteTitle}
-        onChangeText={(newTitle) => setNoteTitle(newTitle)}
-      />
-      <Input
-        value={notes}
-        multiline
-        onChangeText={(newNotes) => setNotes(newNotes)}
-      />
-      <Button title="Save Note" />
-      <View style={{ marginTop: 10 }} />
-      <Button
-        title="Delete Note"
-        buttonStyle={{ backgroundColor: 'red' }}
-        onPress={() => onDelete(noteId)}
-      />
-    </View>
+    <NoteDetailForm
+      noteId={noteId}
+      title={title}
+      notes={notes}
+      onDelete={onDelete}
+    />
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    margin: 10
-  },
-  titleInput: {
-    fontWeight: 'bold',
-    fontSize: 22
-  }
-});
+const styles = StyleSheet.create({});
 
 export default NoteDetailScreen;
