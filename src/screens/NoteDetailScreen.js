@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { deletenote, editnote } from '../actions/noteActions';
 import deleteNoteFromStorage from '../storage/deleteNote';
+import editNoteInStorage from '../storage/editNote';
 import NoteDetailForm from '../components/NoteDetailForm';
 
 const NoteDetailScreen = ({ navigation }) => {
@@ -22,6 +23,7 @@ const NoteDetailScreen = ({ navigation }) => {
   };
 
   const onEdit = async (newNote) => {
+    await editNoteInStorage(newNote);
     editNote(newNote);
     navigation.goBack();
   };
