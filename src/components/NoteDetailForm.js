@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
+import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const NoteDetailForm = ({
   noteId,
@@ -13,8 +15,23 @@ const NoteDetailForm = ({
 }) => {
   const [noteTitle, setNoteTitle] = useState(title);
   const [notesText, setNotesText] = useState(notes);
+  const [reminderDate, setReminderDate] = useState(reminder.date);
+  const [reminderTime, setReminderTime] = useState(reminder.time);
   const [show, setShow] = useState(false);
   const [dateTimePickerMode, setDateTimePickerMode] = useState('date');
+
+  //DateTimePicker Event Handler
+  const onChange = (event, selectedDate) => {
+    setShow(false);
+    switch (dateTimePickerMode) {
+      case 'date':
+        setReminderDate(moment(selectedDate).format('D MMM YYYY'));
+        break;
+      case 'time':
+        setReminderTime(moment(selectedDate).format('HH:mm'));
+        break;
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -28,13 +45,36 @@ const NoteDetailForm = ({
         multiline
         onChangeText={(newNotes) => setNotesText(newNotes)}
       />
-      {reminder.date ? (
+      {reminderDate ? (
         <View style={styles.reminderContainer}>
           <MaterialIcons name="alarm" size={24} color="black" />
-          <Input containerStyle={{ flex: 1 }} value={reminder.date} />
-          <Input containerStyle={{ flex: 1 }} value={reminder.time} />
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => {
+              setShow(true);
+              setDateTimePickerMode('date');
+            }}
+          >
+            <Input disabled value={reminderDate} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => {
+              setShow(true);
+              setDateTimePickerMode('time');
+            }}
+          >
+            <Input disabled value={reminderTime} />
+          </TouchableOpacity>
         </View>
       ) : null}
+      {show && (
+        <DateTimePicker
+          mode={dateTimePickerMode}
+          value={new Date()}
+          onChange={onChange}
+        />
+      )}
       <Button title="Save Note" />
       <View style={{ marginTop: 10 }} />
       <Button

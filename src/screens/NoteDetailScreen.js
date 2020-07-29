@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { deletenote } from '../actions/noteActions';
 import deleteNoteFromStorage from '../storage/deleteNote';
 import NoteDetailForm from '../components/NoteDetailForm';
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 const NoteDetailScreen = ({ navigation }) => {
   const noteId = navigation.getParam('noteId');
