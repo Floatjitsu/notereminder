@@ -4,7 +4,7 @@ import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 const NotesItem = ({ navigation, title, notes, id, reminder }) => {
   const onItemPress = () => {
     const noteId = id;
-    navigation.navigate('NoteDetail', { noteId, title, notes });
+    navigation.navigate('NoteDetail', { noteId, title, notes, reminder });
   };
 
   return (

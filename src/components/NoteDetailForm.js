@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TextInput } from 'react-native';
 import { Input, Button } from 'react-native-elements';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const NoteDetailForm = ({ noteId, title, notes, onDelete }) => {
+const NoteDetailForm = ({
+  noteId,
+  title,
+  notes,
+  onDelete,
+  onEdit,
+  reminder
+}) => {
   const [noteTitle, setNoteTitle] = useState(title);
   const [notesText, setNotesText] = useState(notes);
+  const [show, setShow] = useState(false);
+  const [dateTimePickerMode, setDateTimePickerMode] = useState('date');
 
   return (
     <View style={styles.container}>
@@ -18,6 +28,13 @@ const NoteDetailForm = ({ noteId, title, notes, onDelete }) => {
         multiline
         onChangeText={(newNotes) => setNotesText(newNotes)}
       />
+      {reminder.date ? (
+        <View style={styles.reminderContainer}>
+          <MaterialIcons name="alarm" size={24} color="black" />
+          <Input containerStyle={{ flex: 1 }} value={reminder.date} />
+          <Input containerStyle={{ flex: 1 }} value={reminder.time} />
+        </View>
+      ) : null}
       <Button title="Save Note" />
       <View style={{ marginTop: 10 }} />
       <Button
@@ -36,6 +53,11 @@ const styles = StyleSheet.create({
   titleInput: {
     fontWeight: 'bold',
     fontSize: 22
+  },
+  reminderContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: 10
   }
 });
 
