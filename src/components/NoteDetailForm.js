@@ -77,7 +77,17 @@ const NoteDetailForm = ({
           onChange={onChange}
         />
       )}
-      <Button title="Save Note" />
+      <Button
+        title="Save Note"
+        onPress={() => {
+          onEdit({
+            id: noteId,
+            title: noteTitle,
+            notes: notesText,
+            reminder: { date: reminderDate, time: reminderTime }
+          });
+        }}
+      />
       <View style={{ marginTop: 10 }} />
       <Button
         title="Delete Note"
