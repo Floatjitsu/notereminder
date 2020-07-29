@@ -21,15 +21,17 @@ const NoteDetailForm = ({
   const [dateTimePickerMode, setDateTimePickerMode] = useState('date');
 
   //DateTimePicker Event Handler
-  const onChange = (event, selectedDate) => {
+  const onChange = ({ type }, selectedDate) => {
     setShow(false);
-    switch (dateTimePickerMode) {
-      case 'date':
-        setReminderDate(moment(selectedDate).format('D MMM YYYY'));
-        break;
-      case 'time':
-        setReminderTime(moment(selectedDate).format('HH:mm'));
-        break;
+    if (type !== 'dismissed') {
+      switch (dateTimePickerMode) {
+        case 'date':
+          setReminderDate(moment(selectedDate).format('D MMM YYYY'));
+          break;
+        case 'time':
+          setReminderTime(moment(selectedDate).format('HH:mm'));
+          break;
+      }
     }
   };
 
