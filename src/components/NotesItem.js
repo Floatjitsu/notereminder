@@ -3,6 +3,8 @@ import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const NotesItem = ({ navigation, title, notes, id, reminder }) => {
+  const reminderIsSet = Object.entries(reminder).length === 0 ? false : true;
+
   const onItemPress = () => {
     const noteId = id;
     navigation.navigate('NoteDetail', { noteId, title, notes, reminder });
@@ -20,7 +22,9 @@ const NotesItem = ({ navigation, title, notes, id, reminder }) => {
             style={{ marginRight: 5 }}
           />
           <Text>
-            {reminder.date} {reminder.time}
+            {reminderIsSet
+              ? `${reminder.date} ${reminder.time}`
+              : 'No reminder'}
           </Text>
         </View>
         <Text style={styles.notes}>{notes}</Text>
