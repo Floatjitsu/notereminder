@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const NotesItem = ({ navigation, title, notes, id, reminder }) => {
   const reminderIsSet = Object.entries(reminder).length === 0 ? false : true;
+  const notesAreSet = notes.length === 0 ? false : true;
 
   const onItemPress = () => {
     const noteId = id;
@@ -27,7 +28,8 @@ const NotesItem = ({ navigation, title, notes, id, reminder }) => {
               : 'No reminder'}
           </Text>
         </View>
-        <Text style={styles.notes}>{notes}</Text>
+        {notesAreSet ? <Text style={styles.notes}>{notes}</Text> : null}
+
         <View style={styles.seperator}></View>
       </TouchableOpacity>
     </>
