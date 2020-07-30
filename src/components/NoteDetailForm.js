@@ -19,6 +19,7 @@ const NoteDetailForm = ({
   const [reminderTime, setReminderTime] = useState(reminder.time);
   const [show, setShow] = useState(false);
   const [dateTimePickerMode, setDateTimePickerMode] = useState('date');
+  const [showInputErrorMessage, setShowInputErrorMessage] = useState(false);
 
   //DateTimePicker Event Handler
   const onChange = ({ type }, selectedDate) => {
@@ -35,12 +36,27 @@ const NoteDetailForm = ({
     }
   };
 
+  const onSaveNote = () => {
+    if (noteTitle != '') {
+      onEdit({
+        id: noteId,
+        title: noteTitle,
+        notes: notesText,
+        reminder: { date: reminderDate, time: reminderTime }
+      });
+      setShowInputErrorMessage(false);
+    } else {
+      setShowInputErrorMessage(true);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Input
         inputStyle={styles.titleInput}
         value={noteTitle}
         onChangeText={setNoteTitle}
+        errorMessage={showInputErrorMessage ? 'Title can not be empty' : null}
       />
       <Input
         value={notesText}
@@ -77,17 +93,7 @@ const NoteDetailForm = ({
           onChange={onChange}
         />
       )}
-      <Button
-        title="Save Note"
-        onPress={() => {
-          onEdit({
-            id: noteId,
-            title: noteTitle,
-            notes: notesText,
-            reminder: { date: reminderDate, time: reminderTime }
-          });
-        }}
-      />
+      <Button title="Save Note" onPress={onSaveNote} />
       <View style={{ marginTop: 10 }} />
       <Button
         title="Delete Note"
