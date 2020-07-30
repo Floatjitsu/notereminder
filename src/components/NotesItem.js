@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const NotesItem = ({ navigation, title, notes, id, reminder }) => {
   const onItemPress = () => {
@@ -11,9 +12,17 @@ const NotesItem = ({ navigation, title, notes, id, reminder }) => {
     <>
       <TouchableOpacity onPress={onItemPress}>
         <Text style={styles.title}>{title}</Text>
-        <Text>
-          {reminder.date} {reminder.time}
-        </Text>
+        <View style={styles.reminderContainer}>
+          <MaterialIcons
+            name="alarm"
+            size={18}
+            color="black"
+            style={{ marginRight: 5 }}
+          />
+          <Text>
+            {reminder.date} {reminder.time}
+          </Text>
+        </View>
         <Text style={styles.notes}>{notes}</Text>
         <View style={styles.seperator}></View>
       </TouchableOpacity>
@@ -34,6 +43,10 @@ const styles = StyleSheet.create({
     height: 1,
     width: '100%',
     backgroundColor: '#000'
+  },
+  reminderContainer: {
+    display: 'flex',
+    flexDirection: 'row'
   }
 });
 
