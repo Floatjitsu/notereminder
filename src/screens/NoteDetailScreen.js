@@ -1,52 +1,45 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { deletenote } from '../actions/noteActions';
+import { deletenote, editnote } from '../actions/noteActions';
+import deleteNoteFromStorage from '../storage/deleteNote';
+import editNoteInStorage from '../storage/editNote';
+import NoteDetailForm from '../components/NoteDetailForm';
 
 const NoteDetailScreen = ({ navigation }) => {
   const noteId = navigation.getParam('noteId');
-
-  const [noteTitle, setNoteTitle] = useState(navigation.getParam('title'));
-  const [notes, setNotes] = useState(navigation.getParam('notes'));
+  const title = navigation.getParam('title');
+  const notes = navigation.getParam('notes');
+  const reminder = navigation.getParam('reminder');
 
   const dispatch = useDispatch();
   const deleteNote = (id) => dispatch(deletenote(id));
+  const editNote = (newNote) => dispatch(editnote(newNote));
+
+  const onDelete = async (id) => {
+    await deleteNoteFromStorage(id);
+    deleteNote(id);
+    navigation.goBack();
+  };
+
+  const onEdit = async (newNote) => {
+    await editNoteInStorage(newNote);
+    editNote(newNote);
+    navigation.goBack();
+  };
 
   return (
-    <View style={styles.container}>
-      <Input
-        inputStyle={styles.titleInput}
-        value={noteTitle}
-        onChangeText={(newTitle) => setNoteTitle(newTitle)}
-      />
-      <Input
-        value={notes}
-        multiline
-        onChangeText={(newNotes) => setNotes(newNotes)}
-      />
-      <Button title="Save Note" />
-      <View style={{ marginTop: 10 }} />
-      <Button
-        title="Delete Note"
-        buttonStyle={{ backgroundColor: 'red' }}
-        onPress={() => {
-          deleteNote(noteId);
-          navigation.goBack();
-        }}
-      />
-    </View>
+    <NoteDetailForm
+      noteId={noteId}
+      title={title}
+      notes={notes}
+      reminder={reminder}
+      onDelete={onDelete}
+      onEdit={onEdit}
+    />
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    margin: 10
-  },
-  titleInput: {
-    fontWeight: 'bold',
-    fontSize: 22
-  }
-});
+const styles = StyleSheet.create({});
 
 export default NoteDetailScreen;

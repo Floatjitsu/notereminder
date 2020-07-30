@@ -1,4 +1,4 @@
-import { ADD_NOTE, DELETE_NOTE } from '../types/noteActionTypes';
+import { ADD_NOTE, DELETE_NOTE, EDIT_NOTE } from '../types/noteActionTypes';
 
 export const addnote = (note) => {
   return {
@@ -11,5 +11,12 @@ export const deletenote = (id) => {
   return {
     type: DELETE_NOTE,
     payload: id
+  };
+};
+
+export const editnote = (newNote) => {
+  return {
+    type: EDIT_NOTE,
+    payload: newNote
   };
 };

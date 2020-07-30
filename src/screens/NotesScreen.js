@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Text, StyleSheet, View, FlatList } from 'react-native';
 import NotesItem from '../components/NotesItem';
@@ -14,6 +14,7 @@ const NotesScreen = ({ navigation }) => {
         id={item.id}
         title={item.title}
         notes={item.notes}
+        reminder={item.reminder}
       />
     );
   };
