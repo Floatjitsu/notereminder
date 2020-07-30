@@ -13,6 +13,7 @@ const CreateNoteForm = ({ onSaveNote }) => {
   const [show, setShow] = useState(false); //for showing DateTimePicker
   const [reminderDate, setReminderDate] = useState('');
   const [reminderTime, setReminderTime] = useState('');
+  const [showInputErrorMessage, setShowInputErrorMessage] = useState(false);
 
   const generateId = () => {
     return `_${Math.random().toString(36).substr(2, 9)}`;
@@ -39,9 +40,26 @@ const CreateNoteForm = ({ onSaveNote }) => {
     }
   };
 
+  const onSave = () => {
+    if (noteTitle !== '') {
+      onSaveNote(generateId(), noteTitle, notes, {
+        date: reminderDate,
+        time: reminderTime
+      });
+      setShowInputErrorMessage(false);
+    } else {
+      setShowInputErrorMessage(true);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Input label="Title" value={noteTitle} onChangeText={setNoteTitle} />
+      <Input
+        label="Title"
+        value={noteTitle}
+        onChangeText={setNoteTitle}
+        errorMessage={showInputErrorMessage ? 'Title can not be empty' : null}
+      />
       <Input
         inputStyle={styles.notesInput}
         multiline
@@ -96,16 +114,7 @@ const CreateNoteForm = ({ onSaveNote }) => {
           onChange={onChange}
         />
       )}
-      <Button
-        title="Save Note"
-        type="outline"
-        onPress={() => {
-          onSaveNote(generateId(), noteTitle, notes, {
-            date: reminderDate,
-            time: reminderTime
-          });
-        }}
-      />
+      <Button title="Save Note" type="outline" onPress={onSave} />
     </View>
   );
 };
