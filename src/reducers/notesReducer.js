@@ -1,6 +1,24 @@
 import { ADD_NOTE, DELETE_NOTE, EDIT_NOTE } from '../types/noteActionTypes';
 
-const initialState = [];
+/* Remove these two constants for production */
+const initialNoteWithReminder = {
+  id: '1',
+  title: 'A note for testing',
+  notes: 'Some notes',
+  reminder: {
+    date: '3 Aug 2020',
+    time: '15:22'
+  }
+};
+
+const initialNoteWithoutReminder = {
+  id: '2',
+  title: 'A note without reminder',
+  notes: 'Some more notes',
+  reminder: {}
+};
+
+const initialState = [initialNoteWithReminder, initialNoteWithoutReminder];
 
 const notesReducer = (state = initialState, action) => {
   switch (action.type) {
