@@ -42,14 +42,21 @@ const CreateNoteForm = ({ onSaveNote }) => {
 
   const onSave = () => {
     if (noteTitle !== '') {
-      onSaveNote(generateId(), noteTitle, notes, {
-        date: reminderDate,
-        time: reminderTime
-      });
+      onSaveNote(generateId(), noteTitle, notes, generateReminderInformation());
       setShowInputErrorMessage(false);
     } else {
       setShowInputErrorMessage(true);
     }
+  };
+
+  // Builds an object out of reminder date and time, if set
+  const generateReminderInformation = () => {
+    return reminderDate === '' && reminderTime === ''
+      ? {}
+      : {
+          date: reminderDate,
+          time: reminderTime
+        };
   };
 
   return (
